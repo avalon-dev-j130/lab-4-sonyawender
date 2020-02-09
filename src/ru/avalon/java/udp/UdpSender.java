@@ -1,9 +1,8 @@
 package ru.avalon.java.udp;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketAddress;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 
 /**
  * Упражнение, направленное на выработку умений, связанных
@@ -39,7 +38,7 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод prepareMessage класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return "The message over UDP.";
     }
 
     /**
@@ -51,7 +50,14 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод prepareAddress класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            SocketAddress socketAddress = new InetSocketAddress(inetAddress, 8080);
+            return socketAddress;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -64,7 +70,7 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод createSocket класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return new DatagramSocket();
     }
 
     /**
@@ -78,7 +84,13 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод pack класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try {
+            byte[] datagram = message.getBytes("UTF-8");
+            return new DatagramPacket(datagram, datagram.length);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
